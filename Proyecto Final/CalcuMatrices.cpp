@@ -1,35 +1,325 @@
 #include<iostream>
+#include<windows.h>
+#include<math.h>
+#include<string>
 using namespace std;
 
 int op;
-int Fila;
-int Col;
-float F1C11, F1C21, F1C31, F1C41, F1C51, F1C61, F1C71, F1C81, F1C91, F1C101;	//1 de la primera matriz
-float F2C11, F2C21, F2C31, F2C41, F2C51, F2C61, F2C71, F2C81, F2C91, F2C101;	//2 de la primera matriz
-float F3C11, F3C21, F3C31, F3C41, F3C51, F3C61, F3C71, F3C81, F3C91, F3C101;	//3 de la primera matriz
-float F4C11, F4C21, F4C31, F4C41, F4C51, F4C61, F4C71, F4C81, F4C91, F4C101;	//4 de la primera matriz
-float F5C11, F5C21, F5C31, F5C41, F5C51, F5C61, F5C71, F5C81, F5C91, F5C101;	//5 de la primera matriz
-float F6C11, F6C21, F6C31, F6C41, F6C51, F6C61, F6C71, F6C81, F6C91, F6C101;	//6 de la primera matriz
-float F7C11, F7C21, F7C31, F7C41, F7C51, F7C61, F7C71, F7C81, F7C91, F7C101;	//7 de la primera matriz
-float F8C11, F8C21, F8C31, F8C41, F8C51, F8C61, F8C71, F8C81, F8C91, F8C101;	//8 de la primera matriz
-float F9C11, F9C21, F9C31, F9C41, F9C51, F9C61, F9C71, F9C81, F9C91, F9C101;	//9 de la primera matriz
-float F10C11, F10C21, F10C31, F10C41, F10C51, F10C61, F10C71, F10C81, F10C91, F10C101;	//10 de la primera matriz
+int m, n, a, b;
+float Mat1[10][10], Mat2[10][10], Mat3[10][10], MatV[4][4],MatVR[4][4], Puntos[4][4];
+void IngresarMatriz();
+void ValidarDiezFilas1();
+void ValidarDiezColumnas1();
+void ValidarDiezFilas2();
+void ValidarDiezColumnas2();
+void OperarMatrices();
+void SumarMatrices();
+void RestarMatrices();
+void MultiplicarMatrices();
+void MatrizVector();
 
-float F1C12, F1C22, F1C32, F1C42, F1C52, F1C62, F1C72, F1C82, F1C92, F1C102;	//1 de la segunda matriz
-float F2C12, F2C22, F2C32, F2C42, F2C52, F2C62, F2C72, F2C82, F2C92, F2C102;	//2 de la segunda matriz
-float F3C12, F3C22, F3C32, F3C42, F3C52, F3C62, F3C72, F3C82, F3C92, F3C102;	//3 de la segunda matriz
-float F4C12, F4C22, F4C32, F4C42, F4C52, F4C62, F4C72, F4C82, F4C92, F4C102;	//4 de la segunda matriz
-float F5C12, F5C22, F5C32, F5C42, F5C52, F5C62, F5C72, F5C82, F5C92, F5C102;	//5 de la segunda matriz
-float F6C12, F6C22, F6C32, F6C42, F6C52, F6C62, F6C72, F6C82, F6C92, F6C102;	//6 de la segunda matriz
-float F7C12, F7C22, F7C32, F7C42, F7C52, F7C62, F7C72, F7C82, F7C92, F7C102;	//7 de la segunda matriz
-float F8C12, F8C22, F8C32, F8C42, F8C52, F8C62, F8C72, F8C82, F8C92, F8C102;	//8 de la segunda matriz
-float F9C12, F9C22, F9C32, F9C42, F9C52, F9C62, F9C72, F9C82, F9C92, F9C102;	//9 de la segunda matriz
-float F10C12, F10C22, F10C32, F10C42, F10C52, F10C62, F10C72, F10C82, F10C92, F10C102;	//10 de la segunda matriz
 
-void main() {
+
+
+int main() {
 	locale::global(locale("Spanish"));
-	cout << "¿Qué deseas hacer? \n 1.-Sumar\n 2.-Restar\n 3.-Multiplicar" << endl;
+	cout << "Programa para operar matrices" << endl;
+	cout << "¿Qué deseas hacer? \n 1.-Ingresar matrices para operar \n 2.-Ingresar matriz para punto vector \n 3.-Salir" << endl;
 	cin >> op;
 
+	switch (op) {
 
+	case 1:
+		MessageBox(NULL, "Se ingresara una nueva matriz", "Recordatorio",NULL);
+		IngresarMatriz();
+		break;
+	case 2:
+		MatrizVector();
+		break;
+	case 3:
+		exit(1);
+		break;
+	default:
+		system("cls");
+		main();
+	}
+	return 0;
+}
+
+void IngresarMatriz() {
+	//Este ciclo sirve para ingresar los datos de la primera matriz
+	cout << "Ingrese el número de filas de la primera matriz (No debe ser mayor a diez)" << endl;
+	ValidarDiezFilas1();
+	cout << "Ingrese el número de Columnas de la primera matriz (No debe ser mayor a diez)" << endl;
+	ValidarDiezColumnas1();
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << "Matriz 1" << endl;
+			cout << "Inserte el valor en la posición " << i << "," << j << endl;
+			cin >> Mat1[i][j];
+			system("cls");
+		}
+	}
+	//Este ciclo sirve para ingresar los datos de la segunda matriz
+	cout << "Ingrese el número de filas de la segunda matriz (No debe ser mayor a diez)" << endl;
+	ValidarDiezFilas2();
+	cout << "Ingrese el número de Columnas de la segunda matriz (No debe ser mayor a diez)" << endl;
+	ValidarDiezColumnas2();
+	for (int i = 0; i < a; i++) {
+		for (int j = 0; j < b; j++) {
+			cout << "Matriz 2" << endl;
+			cout << "Inserte el valor en la posición " << i << "," << j << endl;
+			cin >> Mat2[i][j];
+			system("cls");
+		}
+	}
+ //Este ciclo imprime la primera matriz
+	cout << "Matriz 1" << endl;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << Mat1[i][j] << "\t";
+		}
+		cout << endl;
+	}
+//Este ciclo imprime la segunda Matriz
+	cout << "Matriz 2" << endl;
+	for (int i = 0; i < a; i++) {
+		for (int j = 0; j < b; j++) {
+			cout << Mat2[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << "_______________________________________________________" << endl;
+	cout << "¿Esta todo correcto? 1.-Sí 2.-No" << endl;
+	cin >> op;
+	if (op == 2) {
+		cout << "Se volveran a ingresar los datos de la matriz" << endl;
+		cout << "Cargando";
+		Sleep(1000);
+		cout << ".";
+		Sleep(1000);
+		cout << ".";
+		Sleep(1000);
+		cout << ".";
+		Sleep(1000);
+		IngresarMatriz();
+	}
+
+	OperarMatrices();
+}
+void ValidarDiezFilas1() {
+	cin >> m;
+	if (10 < m) {
+
+		MessageBox(NULL, "No se pueden poner más de 10 filas :(", "Sorry bro", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezFilas1();
+	}
+	if (m <= 0) {
+		MessageBox(NULL, "No te pases de listo, poner 0 filas o menos no se puede -_-", "No se puede", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezFilas1();
+	}
+}
+void ValidarDiezColumnas1() {
+	cin >> n;
+	if (10 < n) {
+		MessageBox(NULL, "No se pueden poner más de 10 Columnas :(", "Sorry bro", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezColumnas1();
+	}
+	if (n <= 0) {
+		MessageBox(NULL, "No te pases de listo, poner 0 columnas o menos es como sostener un edificio sin ellas -_-", "No se puede", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezColumnas1();
+	}
+}
+void ValidarDiezFilas2() {
+	cin >> a;
+	if (10 < a) {
+
+		MessageBox(NULL, "No se pueden poner más de 10 filas :(", "Sorry bro", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezFilas2();
+	}
+	if (a <= 0) {
+		MessageBox(NULL, "No te pases de listo, poner 0 filas o menos no se puede -_-", "No se puede", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezFilas2();
+	}
+}
+void ValidarDiezColumnas2() {
+	cin >> b;
+	if (10 < b) {
+		MessageBox(NULL, "No se pueden poner más de 10 Columnas :(", "Sorry bro", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezColumnas2();
+	}
+	if (b <= 0) {
+		MessageBox(NULL, "No te pases de listo, poner 0 columnas o menos es como sostener un edificio sin ellas -_-", "No se puede", NULL);
+		cout << "¿Quieres continuar? 1.-Si 2.-No" << endl;
+		cin >> op;
+		if (op == 2) {
+			main();
+		}
+		ValidarDiezColumnas2();
+	}
+}
+void OperarMatrices() {
+	cout << "¿Qué desea hacer con las matrices? \n1.-Sumar \n2.-Restar \n3.-Multiplicar \n4.-Matriz por Vector" << endl;
+	cin >> op;
+	cout << endl;
+	switch (op) {
+	case 1:
+		SumarMatrices();
+		break;
+	case 2:
+		RestarMatrices();
+		break;
+	case 3:
+		MultiplicarMatrices();
+	case 4:
+		MatrizVector();
+	}
+}
+
+void SumarMatrices() {
+	bool Hola = true;
+	if (m == a && n == b) {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				cout << Mat1[i][j] + Mat2[i][j] << "\t";
+			}
+			cout << endl;
+		}
+		Hola = false;
+		system("pause");
+	}
+	else if (Hola) {
+		MessageBox(NULL, "Ups", 
+			"Las matrices no pueden ser sumadas debido a que no tienen las mismas dimensiones", NULL);
+		cout << "¿Quieres repetir el proceso del llenado de matrices?" << endl;
+		cout << "1.-Si 2.-No (Salir)" << endl;
+		cin >> op;
+		if (op == 1) IngresarMatriz();
+		if (op == 2) exit(1);
+	}
+	cout << "¿Desea hacer otra operación? ó ¿Desea salir?" << endl;
+	cout << "1.-Hacer otra operacion con las mismas matrices \n2.-Salir" << endl;
+	cin >> op;
+	if (op == 1) OperarMatrices();
+	if (op == 2) exit(1);
+}
+void RestarMatrices() {
+	bool Hola = true;
+	if (m == a && n == b) {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				cout << Mat1[i][j] - Mat2[i][j] << "\t";
+			}
+			cout << endl;
+		}
+		Hola = false;
+		system("pause");
+	}
+	else if (Hola) {
+		MessageBox(NULL, "Ups",
+			"Las matrices no pueden ser restadas debido a que no tienen las mismas dimensiones", NULL);
+		cout << "¿Quieres repetir el proceso del llenado de matrices?" << endl;
+		cout << "1.-Si 2.-No (Salir)" << endl;
+		cin >> op;
+		if (op == 1) IngresarMatriz();
+		if (op == 2) exit(1);
+	}
+	cout << "¿Desea hacer otra operación? ó ¿Desea salir?" << endl;
+	cout << "1.-Hacer otra operacion con las mismas matrices \n2.-Salir" << endl;
+	cin >> op;
+	if (op == 1) OperarMatrices();
+	if (op == 2) exit(1);
+
+}
+void MultiplicarMatrices() {
+
+	bool Hola = true;
+	if (n == b) {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < n; k++) {
+					Mat3[i][j] += Mat1[i][k] * Mat2[k][j];
+				}	
+			}
+		}
+	}
+	system("cls");
+
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			cout <<"\t"<< Mat3[i][j]<<"\t";
+		}
+		cout << endl;
+	}
+	system("pause");
+
+}
+
+void MatrizVector() {
+	
+	cout << "Ingrese la matriz que se multiplicara por el vector" << endl;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			cout << "Inserte el valor en la posición " << i << "," << j << endl;
+			cin >> MatV[i][j];
+			system("cls");
+		}
+	}
+	cout << "Ingrese los valores de cada punto (x,y,z)" << endl;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 1; j++) {
+			cin >> Puntos[i][j];
+		}
+	}
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++) {
+			for (int k = 0; k < 4; k++) {
+				MatVR[i][j] += MatV[i][k] * Puntos[k][j];
+			}
+		}
+	}
+	cout << "El resultado es: " << endl;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			
+			cout << MatVR[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	system("cls");
 }
